@@ -73,8 +73,8 @@ export const useStore = create<Store>((set, get) => ({
     set({ order });
   },
   removeItem: (id) => {
-    set({
-      order: get().order.filter((item) => item.id !== id),
-    });
+    set((state) => ({
+      order: state.order.filter((item) => item.id !== id),
+    }));
   },
 }));
