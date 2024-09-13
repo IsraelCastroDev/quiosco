@@ -12,6 +12,9 @@ function ProductDetails({ item }: Props) {
   const increaseQuantity = useStore((state) => state.increaseQuantity);
   const removeItem = useStore((state) => state.removeItem);
 
+  const MAX_ITEMS = 5;
+  const MIN_ITEMS = 1;
+
   return (
     <div className="shadow space-y-1 p-4 bg-white  border-t border-gray-200 ">
       <div className="space-y-4">
@@ -29,7 +32,7 @@ function ProductDetails({ item }: Props) {
           <button
             type="button"
             onClick={() => decreaseQuantity(item.id)}
-            disabled={item.quantity === 1}
+            disabled={item.quantity === MIN_ITEMS}
             className="disabled:opacity-40"
           >
             <MinusIcon className="h-6 w-6" />
@@ -40,7 +43,7 @@ function ProductDetails({ item }: Props) {
           <button
             type="button"
             onClick={() => increaseQuantity(item.id)}
-            disabled={item.quantity === 5}
+            disabled={item.quantity === MAX_ITEMS}
             className="disabled:opacity-40"
           >
             <PlusIcon className="h-6 w-6" />
