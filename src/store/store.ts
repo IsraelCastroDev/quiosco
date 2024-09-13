@@ -7,6 +7,7 @@ interface Store {
   addToOrder: (product: Product) => void;
   decreaseQuantity: (id: OrderItem["id"]) => void;
   increaseQuantity: (id: OrderItem["id"]) => void;
+  removeItem: (id: OrderItem["id"]) => void;
 }
 
 export const useStore = create<Store>((set, get) => ({
@@ -43,7 +44,11 @@ export const useStore = create<Store>((set, get) => ({
     if (get().order.find((item) => item.id === id)) {
       order = get().order.map((item) =>
         item.id === id
-          ? { ...item, quantity: item.quantity === 1 ? 1 : item.quantity - 1 }
+          ? {
+              ...item,
+              quantity: item.quantity === 1 ? 1 : item.quantity - 1,
+              subtotal: item.price * (item.quantity - 1),
+            }
           : item
       );
     }
@@ -56,11 +61,20 @@ export const useStore = create<Store>((set, get) => ({
     if (get().order.find((item) => item.id === id)) {
       order = get().order.map((item) =>
         item.id === id
-          ? { ...item, quantity: item.quantity < 5 ? item.quantity + 1 : 5 }
+          ? {
+              ...item,
+              quantity: item.quantity < 5 ? item.quantity + 1 : 5,
+              subtotal: item.price * (item.quantity + 1),
+            }
           : item
       );
     }
 
     set({ order });
+  },
+  removeItem: (id) => {
+    set({
+      order: get().order.filter((item) => item.id !== id),
+    });
   },
 }));
