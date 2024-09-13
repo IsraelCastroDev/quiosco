@@ -1,5 +1,5 @@
-import OrderSidebar from "@/components/OrderSidebar";
-import OrderSumary from "@/components/OrderSumary";
+import OrderSidebar from "@/components/Order/OrderSidebar";
+import OrderSumary from "@/components/Order/OrderSumary";
 
 function OrderLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
